@@ -26,20 +26,55 @@
             line-height: 1.6;
         }
 
-        /* Hero Header */
+        /* Hero Header (Updated for Anniversary) */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: radial-gradient(circle at center, var(--secondary), var(--primary));
             color: var(--white);
-            padding: 3rem 1rem 5rem;
+            padding: 4rem 1rem 6rem; /* Increased padding */
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: -1px; }
-        header p { font-size: 1.25rem; opacity: 0.9; margin-top: 0.5rem; font-weight: 300; }
+        /* Festive 30th Anniversary Badge */
+        .anniversary-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+            border: 2px solid rgba(255,255,255,0.4);
+            animation: pulse-gold 2s infinite ease-in-out;
+            position: relative;
+        }
+
+        .anniversary-badge::before, .anniversary-badge::after {
+            content: "✨";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+        .anniversary-badge::before { left: 10px; }
+        .anniversary-badge::after { right: 10px; }
+
+        @keyframes pulse-gold {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        header h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
+        header p { font-size: 1.3rem; opacity: 0.9; margin-top: 1rem; font-weight: 300; }
 
         .container {
             max-width: 1000px;
-            margin: -40px auto 40px;
+            margin: -50px auto 40px;
             padding: 0 20px;
         }
 
@@ -61,15 +96,28 @@
         .step-date { font-weight: 800; color: var(--primary); display: block; font-size: 1.1rem; }
         .step-label { font-size: 0.9rem; color: #64748b; }
 
-        /* 2. PROGRAM OVERVIEW */
+        /* 2. PROGRAM OVERVIEW (Updated Grid) */
         .program-section { margin-bottom: 3rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .scholar-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; border-top: 5px solid var(--secondary); }
+        
+        /* Updated Grid Logic */
+        .grid-3 { 
+            display: grid; 
+            /* Mobile Default: 1 Column (prevents squishing) */
+            grid-template-columns: 1fr; 
+            gap: 1.5rem; 
+        }
+
+        /* Desktop View: 3 Columns */
+        @media (min-width: 768px) {
+            .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .scholar-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; border-top: 5px solid var(--secondary); display: flex; flex-direction: column; }
         .scholar-card:hover { transform: translateY(-5px); }
         .card-header { background: var(--light-teal); padding: 1.5rem; border-bottom: 1px solid var(--border); }
         .card-header h3 { margin: 0; color: var(--primary); font-size: 1.4rem; }
         .grade-tag { display: inline-block; background: var(--accent); color: white; font-size: 0.75rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 5px; text-transform: uppercase; }
-        .card-body { padding: 1.5rem; }
+        .card-body { padding: 1.5rem; flex-grow: 1; }
         .card-body ul { padding-left: 20px; color: #475569; margin-bottom: 0; }
         .card-body li { margin-bottom: 8px; }
 
@@ -124,7 +172,7 @@
         .req-list li::before { 
             content: "✓"; display: inline-flex; justify-content: center; align-items: center; 
             min-width: 28px; height: 28px; background: var(--primary); color: white; 
-            border-radius: 50%; margin-right: 15px; font-size: 0.9rem; font-weight: bold; margin-top: 2px;
+            border-radius: 50%; margin-right: 15px; font-size: 0.9rem; font-weight: bold; margin-top: 2px; flex-shrink: 0;
         }
 
         .wizard-buttons { margin-top: 2rem; display: flex; gap: 15px; flex-wrap: wrap; }
@@ -143,7 +191,6 @@
         .calc-header { text-align: center; margin-bottom: 2rem; border-bottom: 1px solid #2dd4bf; padding-bottom: 1rem; }
         .calc-header h2 { margin: 0; color: #5eead4; }
         
-        /* 3 Columns now for the calculator inputs */
         .calc-controls { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -162,7 +209,6 @@
         .calc-result { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
         .result-percent { font-size: 4rem; font-weight: 800; color: #5eead4; line-height: 1; margin-bottom: 10px; }
         
-        /* Rejection State */
         .calc-result.rejected { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); }
         .calc-result.rejected .result-percent { color: #fca5a5; }
 
@@ -193,6 +239,8 @@
 <body>
 
 <header>
+    <div class="anniversary-badge">30 Years of Excellence</div>
+
     <h1>Silicon Valley Academy</h1>
     <p>The Future Scholars Initiative</p>
 </header>
@@ -348,7 +396,7 @@
 
 <footer>
     <p>© 2025 Silicon Valley Academy | Future Scholars Initiative<br>
-    <em>Calculator estimates are for planning purposes. For questions, please contact scholarship@svaschool.org.</em></p>
+    <em>Calculator estimates are for planning purposes. For questions, please contact scholarship@svaschool.org</em></p>
 </footer>
 
 <script>
