@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVA Future Scholars Initiative</title>
+    <style>
+        :root {
+            /* TEAL PALETTE */
+            --primary: #0f766e;       /* Dark Teal */
+            --secondary: #0d9488;     /* Medium Teal */
+            --light-teal: #f0fdfa;    /* Background */
+            --accent: #f59e0b;        /* Gold/Orange */
+            --white: #ffffff;
+            --text-dark: #334155;
+            --border: #ccfbf1;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--light-teal);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Hero Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 3rem 1rem 5rem;
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 2.8rem; font-weight: 700; letter-spacing: -1px; }
+        header p { font-size: 1.25rem; opacity: 0.9; margin-top: 0.5rem; font-weight: 300; }
+
+        .container {
+            max-width: 1000px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+        }
+
+        /* 1. TIMELINE SECTION */
+        .timeline-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        .timeline-header { text-align: center; color: var(--primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+        .timeline-steps { display: flex; justify-content: space-between; position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-steps::before { content: ''; position: absolute; top: 18px; left: 0; right: 0; height: 4px; background: #e2e8f0; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; background: white; padding: 0 10px; flex: 1; }
+        .step-circle { width: 40px; height: 40px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 0 0 5px white; }
+        .step-date { font-weight: 800; color: var(--primary); display: block; font-size: 1.1rem; }
+        .step-label { font-size: 0.9rem; color: #64748b; }
+
+        /* 2. PROGRAM OVERVIEW */
+        .program-section { margin-bottom: 3rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .scholar-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; border-top: 5px solid var(--secondary); }
+        .scholar-card:hover { transform: translateY(-5px); }
+        .card-header { background: var(--light-teal); padding: 1.5rem; border-bottom: 1px solid var(--border); }
+        .card-header h3 { margin: 0; color: var(--primary); font-size: 1.4rem; }
+        .grade-tag { display: inline-block; background: var(--accent); color: white; font-size: 0.75rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 5px; text-transform: uppercase; }
+        .card-body { padding: 1.5rem; }
+        .card-body ul { padding-left: 20px; color: #475569; margin-bottom: 0; }
+        .card-body li { margin-bottom: 8px; }
+
+        /* 3. WIZARD SECTION */
+        .wizard-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .wizard-controls { 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            flex-wrap: wrap; 
+            margin-bottom: 3rem; 
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .control-group label { display: block; font-weight: bold; color: var(--primary); margin-bottom: 8px; font-size: 1.1rem; }
+        select { padding: 10px; font-size: 1rem; border-radius: 6px; border: 1px solid #cbd5e1; min-width: 280px; cursor: pointer; background: white; }
+        
+        .result-badge {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .result-title { font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; font-weight: 800; }
+        .result-desc { font-size: 1.1rem; color: #64748b; margin-bottom: 2rem; }
+
+        .checklist-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .checklist-header { font-weight: bold; font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text-dark); }
+        .req-list { list-style: none; padding: 0; margin: 0; }
+        .req-list li { margin-bottom: 15px; display: flex; align-items: flex-start; font-size: 1.05rem; }
+        .req-list li::before { 
+            content: "✓"; display: inline-flex; justify-content: center; align-items: center; 
+            min-width: 28px; height: 28px; background: var(--primary); color: white; 
+            border-radius: 50%; margin-right: 15px; font-size: 0.9rem; font-weight: bold; margin-top: 2px;
+        }
+
+        .wizard-buttons { margin-top: 2rem; display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { background: white; border: 2px solid var(--primary); color: var(--primary); }
+
+        /* 4. CALCULATOR */
+        .calculator-box {
+            background: #115e59; 
+            color: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .calc-header { text-align: center; margin-bottom: 2rem; border-bottom: 1px solid #2dd4bf; padding-bottom: 1rem; }
+        .calc-header h2 { margin: 0; color: #5eead4; }
+        
+        /* 3 Columns now for the calculator inputs */
+        .calc-controls { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 2rem; 
+            margin-bottom: 2rem; 
+        }
+        
+        label { font-weight: bold; color: #ccfbf1; display: block; margin-bottom: 10px; font-size: 0.95rem; }
+        
+        input[type=range] { width: 100%; -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: var(--accent); cursor: pointer; margin-top: -10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: #99f6e4; border-radius: 3px; }
+        
+        .input-display { font-size: 1.4rem; font-weight: bold; color: white; margin-top: 5px; }
+
+        .calc-result { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
+        .result-percent { font-size: 4rem; font-weight: 800; color: #5eead4; line-height: 1; margin-bottom: 10px; }
+        
+        /* Rejection State */
+        .calc-result.rejected { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); }
+        .calc-result.rejected .result-percent { color: #fca5a5; }
+
+        .disclaimer-box {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #ccfbf1;
+            text-align: left;
+        }
+        .disclaimer-box h4 { margin: 0 0 5px 0; color: #5eead4; }
+
+        .assistance-alert { display: none; background: #fef2f2; color: #991b1b; padding: 2rem; border-radius: 8px; text-align: center; }
+        .assistance-alert a { color: #991b1b; font-weight: bold; text-decoration: underline; }
+
+        @media (max-width: 700px) {
+            .timeline-steps { flex-direction: column; gap: 20px; }
+            .timeline-steps::before { display: none; }
+            .calc-controls { grid-template-columns: 1fr; gap: 1.5rem; }
+            .wizard-controls { gap: 15px; }
+        }
+        
+        footer { text-align: center; padding: 3rem; color: #64748b; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Silicon Valley Academy</h1>
+    <p>The Future Scholars Initiative</p>
+</header>
+
+<div class="container">
+
+    <div class="timeline-card">
+        <h2 class="timeline-header">2026 Key Dates</h2>
+        <div class="timeline-steps">
+            <div class="step">
+                <div class="step-circle">1</div>
+                <span class="step-date">March 1, 2026</span>
+                <span class="step-label">Applications Open</span>
+            </div>
+            <div class="step">
+                <div class="step-circle">2</div>
+                <span class="step-date">April 1, 2026</span>
+                <span class="step-label">Submission Deadline</span>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <span class="step-date">April 25, 2026</span>
+                <span class="step-label">Decisions Released</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="program-section">
+        <div class="grid-3">
+            <div class="scholar-card">
+                <div class="card-header">
+                    <span class="grade-tag">Grades K – 2</span>
+                    <h3>The Budding Scholar</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Focus:</strong> Joy, Belonging & Family Partnership.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>"My School" Drawing</li>
+                        <li>Student Kindness Pledge</li>
+                        <li>Teacher/Parent Citizenship Check</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="scholar-card">
+                <div class="card-header">
+                    <span class="grade-tag">Grades 3 – 5</span>
+                    <h3>The Junior Innovator</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Focus:</strong> Agency, Service & "Grit".</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Micro-Service Project</li>
+                        <li>Project Evidence Log</li>
+                        <li>Teacher "Grit" Assessment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="scholar-card">
+                <div class="card-header">
+                    <span class="grade-tag">Grades 6 – 8</span>
+                    <h3>The Future Leader</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Focus:</strong> Professionalism & Impact.</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>Professional Resume</li>
+                        <li>Leadership Proposal (Club/Role)</li>
+                        <li>Formal Board Interview</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wizard-container">
+        <div class="wizard-controls">
+            <div class="control-group">
+                <label>Student Grade Level (Next Year)</label>
+                <select id="gradeSelect" onchange="renderView()">
+                    <option value="">-- Select Grade Level --</option>
+                    <option value="k2">Kindergarten – 2nd</option>
+                    <option value="35">3rd – 5th Grade</option>
+                    <option value="68">6th – 8th Grade</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Family Status</label>
+                <select id="statusSelect" onchange="renderView()">
+                    <option value="current">Current SVA Family</option>
+                    <option value="new">New Applicant Family</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="results" style="display:none; animation: fadeIn 0.5s;">
+            </div>
+    </div>
+
+    <div class="calculator-box">
+        <div class="calc-header">
+            <h2>Eligibility & Merit Calculator</h2>
+            <p>Estimate your grant based on Financial Need AND Application Quality.</p>
+        </div>
+
+        <div class="calc-controls">
+            <div>
+                <label>Students at SVA</label>
+                <input type="range" id="kidsRange" min="1" max="5" value="1" oninput="calculateScholarship()">
+                <div class="input-display"><span id="kidsDisplay">1</span> Student(s)</div>
+            </div>
+            
+            <div>
+                <label>Annual Family Income (AGI)</label>
+                <input type="range" id="incomeRange" min="150000" max="260000" step="5000" value="200000" oninput="calculateScholarship()">
+                <div class="input-display">$<span id="incomeDisplay">200,000</span></div>
+            </div>
+
+            <div>
+                <label>Est. Application Score (0-100)</label>
+                <input type="range" id="meritRange" min="0" max="100" step="5" value="85" oninput="calculateScholarship()">
+                <div class="input-display"><span id="meritDisplay">85</span> / 100</div>
+            </div>
+        </div>
+
+        <div id="scholarshipResult" class="calc-result">
+            <div class="result-percent"><span id="percentOutput">--</span>%</div>
+            <div class="result-label">Estimated Merit Grant</div>
+            <div class="result-detail" id="calcDetailText">Based on financial cap and application quality.</div>
+        </div>
+
+        <div class="disclaimer-box">
+            <h4>⚠️ Important Policy Notes:</h4>
+            <ul>
+                <li><strong>Rejection:</strong> Applications with a score below 70 may be rejected regardless of financial eligibility.</li>
+                <li><strong>School Approval:</strong> All grants are subject to final Board approval and budget availability.</li>
+                <li><strong>Provisional Status:</strong> Grants for new families are provisional pending a December review.</li>
+            </ul>
+        </div>
+
+        <div id="assistanceAlert" class="assistance-alert">
+            <h3>Tuition Assistance Recommended</h3>
+            <p>Based on your income (below $180k), you likely qualify for our full Tuition Assistance Program.</p>
+            <a href="#" onclick="alert('Redirect to SVA Financial Aid')">Go to Financial Aid Page →</a>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2025 Silicon Valley Academy | Future Scholars Initiative<br>
+    <em>Calculator estimates are for planning purposes.</em></p>
+</footer>
+
+<script>
+    /* --- CALCULATOR LOGIC --- */
+    function calculateScholarship() {
+        const income = parseInt(document.getElementById('incomeRange').value);
+        const kids = parseInt(document.getElementById('kidsRange').value);
+        const merit = parseInt(document.getElementById('meritRange').value);
+        
+        // Update Displays
+        document.getElementById('kidsDisplay').innerText = kids;
+        document.getElementById('incomeDisplay').innerText = income.toLocaleString();
+        document.getElementById('meritDisplay').innerText = merit;
+        
+        const resultBox = document.getElementById('scholarshipResult');
+        const alertBox = document.getElementById('assistanceAlert');
+        const percentOutput = document.getElementById('percentOutput');
+        const detailText = document.getElementById('calcDetailText');
+
+        // 1. Under 180k Check
+        if (income < 180000) {
+            resultBox.style.display = 'none';
+            alertBox.style.display = 'block';
+            return;
+        }
+
+        resultBox.style.display = 'block';
+        alertBox.style.display = 'none';
+        resultBox.classList.remove('rejected');
+
+        // 2. Calculate FINANCIAL ELIGIBILITY (The Ceiling)
+        let basePercent = 30;
+        if (income > 250000) {
+             basePercent = 0;
+        } else {
+             let drop = ((income - 180000) / 70000) * 25;
+             basePercent = 30 - drop;
+        }
+
+        // Sibling Bonus
+        let siblingBonus = (kids - 1) * 2;
+        let eligibleMax = basePercent + siblingBonus;
+
+        // Caps
+        if (eligibleMax > 30) eligibleMax = 30; 
+        if (eligibleMax < 5) eligibleMax = 5;
+
+        // 3. Calculate MERIT IMPACT (The Actual Award)
+        let finalPercent = 0;
+
+        if (merit < 70) {
+            // REJECTION ZONE
+            finalPercent = 0;
+            resultBox.classList.add('rejected');
+            detailText.innerText = "Application Score too low. Application likely rejected.";
+        } else if (merit >= 90) {
+            // FULL AWARD ZONE
+            finalPercent = eligibleMax;
+            detailText.innerText = `Excellent application! Full eligible amount awarded.`;
+        } else {
+            // SCALED ZONE (70-89)
+            // Scale logic: 70 = 50% of award, 89 = ~90% of award
+            let scaleFactor = 0.5 + ((merit - 70) / 20) * 0.5;
+            finalPercent = eligibleMax * scaleFactor;
+            detailText.innerText = `Good application. Award scaled based on score.`;
+        }
+
+        percentOutput.innerText = Math.round(finalPercent);
+    }
+
+    /* --- WIZARD LOGIC --- */
+    const wizardData = {
+        "k2": {
+            badge: "Kindergarten - 2nd",
+            title: "The Budding Scholar",
+            desc: "For our youngest learners, we focus on school readiness and building a culture of kindness.",
+            current: { 
+                steps: [
+                    "<strong>'My School' Poster:</strong> A drawing of the student being a good friend.",
+                    "<strong>Student Pledge:</strong> Signed promise to be kind and listen.",
+                    "<strong>Teacher Checklist:</strong> Internal review of citizenship (completed by current teacher)."
+                ], 
+                docs: ["Poster Template", "Family Pledge"] 
+            },
+            new: { 
+                steps: [
+                    "<strong>'My New School' Drawing:</strong> What are you excited to learn?",
+                    "<strong>Student Pledge:</strong> Signed promise to be kind.",
+                    "<strong>Parent Interview:</strong> Discussion on reinforcing values at home."
+                ], 
+                docs: ["Poster Template", "New Family Guide"] 
+            }
+        },
+        "35": {
+            badge: "3rd - 5th Grade",
+            title: "The Junior Innovator",
+            desc: "We teach students the 'Action Cycle': See a problem, plan a solution, and reflect on the result.",
+            current: { 
+                steps: [
+                    "<strong>Micro-Project:</strong> Complete one service act (e.g., Clean a park, Help a neighbor).",
+                    "<strong>Evidence Log:</strong> Submit the 1-page log with photos and reflection.",
+                    "<strong>Grit Assessment:</strong> Teacher review of resilience and responsibility."
+                ], 
+                docs: ["Project Planning Sheet", "Project Log"] 
+            },
+            new: { 
+                steps: [
+                    "<strong>'Hello Letter':</strong> A letter to the Principal about your skills and goals.",
+                    "<strong>External Reference:</strong> One note from a coach/teacher confirming character.",
+                    "<strong>Provisional Review:</strong> Scholarship is reviewed in December."
+                ], 
+                docs: ["Letter Template", "Reference Form"] 
+            }
+        },
+        "68": {
+            badge: "6th - 8th Grade",
+            title: "The Future Leader",
+            desc: "A pre-collegiate experience designed to build professional skills, resumes, and leadership capability.",
+            current: { 
+                steps: [
+                    "<strong>Professional Resume:</strong> 1-page CV of academics and service.",
+                    "<strong>Impact Proposal:</strong> Propose a new club, event, or service role.",
+                    "<strong>Board Interview:</strong> 15-minute formal interview defending the proposal.",
+                    "<strong>Teacher Recommendation:</strong> Requested via formal email."
+                ], 
+                docs: ["Resume Template", "Rec Form", "Proposal Guide"] 
+            },
+            new: { 
+                steps: [
+                    "<strong>Professional Resume:</strong> CV of previous activities.",
+                    "<strong>'Why SVA?' Essay:</strong> 250 words on leadership plans.",
+                    "<strong>Board Interview:</strong> 15-minute formal interview.",
+                    "<strong>External Recommendation:</strong> From previous school teacher."
+                ], 
+                docs: ["Resume Template", "Rec Form"] 
+            }
+        }
+    };
+
+    function renderView() {
+        const grade = document.getElementById('gradeSelect').value;
+        const status = document.getElementById('statusSelect').value;
+        const container = document.getElementById('results');
+
+        if (!grade) { container.style.display = 'none'; return; }
+
+        const info = wizardData[grade];
+        const details = info[status];
+        
+        let stepsHTML = details.steps.map(s => `<li>${s}</li>`).join('');
+        let buttonsHTML = details.docs.map(d => `<button class="btn btn-outline" onclick="alert('Downloading ${d}')">📄 Download ${d}</button>`).join('');
+        
+        let provisionalAlert = status === 'new' ? 
+            `<div style="margin-bottom:20px; color:#c2410c; background:#ffedd5; padding:10px; border-radius:6px; font-size:0.9rem;">⚠️ <strong>Note:</strong> New student grants are provisional pending December review.</div>` : '';
+
+        // Injecting the "Card" Layout
+        container.innerHTML = `
+            <span class="result-badge">${info.badge}</span>
+            <h2 class="result-title">${info.title}</h2>
+            <p class="result-desc">${info.desc}</p>
+
+            <div class="checklist-card">
+                <div class="checklist-header">
+                    ${status === 'new' ? '📝 New Applicant Requirements' : '📋 Returning Student Requirements'}
+                </div>
+                ${provisionalAlert}
+                <ul class="req-list">${stepsHTML}</ul>
+            </div>
+
+            <div class="wizard-buttons">
+                <button class="btn btn-primary" onclick="alert('Go to Finance Portal')">Step 1: Submit Financials</button>
+                ${buttonsHTML}
+            </div>
+        `;
+        container.style.display = 'block';
+    }
+
+    // Init
+    calculateScholarship();
+</script>
+
+</body>
+</html>
