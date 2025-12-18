@@ -407,7 +407,7 @@
             <ul>
                 <li><strong>Rejection:</strong> Applications with a score below 70 may be rejected regardless of financial eligibility.</li>
                 <li><strong>School Approval:</strong> All grants are subject to final Board approval and budget availability.</li>
-                <li><strong>Provisional Status:</strong> Grants for new families are provisional pending a December review.</li>
+                <li><strong>Probationary Status:</strong> Grants for new families are probationary pending a December review.</li>
             </ul>
         </div>
 
@@ -430,12 +430,15 @@
 
         <p><strong>SUBJECT TO VERIFICATION & FUNDING:</strong> 
         All final award amounts are contingent upon: (1) Verification of family financial data (e.g., Federal Tax Returns, W-2s) via the school’s formal financial aid process; (2) The subjective evaluation of the student’s application materials by the Scholarship Committee; and (3) The availability of scholarship funds in the SVA annual budget. Meeting the eligibility criteria does not guarantee funding.</p>
-
+        
+        <p><strong>FINALITY OF DECISIONS::</strong> 
+        All determinations regarding scholarship eligibility and award amounts are made at the sole discretion of the Scholarship Committee. These decisions are final and binding, with no option for appeal or further review.</p>
+        
         <p><strong>POLICY CHANGES:</strong> 
         Silicon Valley Academy (SVA) reserves the right to modify program requirements, income thresholds, award percentages, and application deadlines at any time without prior notice. This program is separate from SVA’s standard Tuition Assistance Program; families may not double-count awards unless explicitly stated in the award letter.</p>
 
         <p><strong>NON-DISCRIMINATION:</strong> 
-        SVA admits students of any race, color, national and ethnic origin to all the rights, privileges, programs, and activities generally accorded or made available to students at the school.</p>
+        SVA does not discriminate on the basis of race, color, national or ethnic origin, sex, or disability in its scholarship programs or any other educational activities. All qualified individuals are encouraged to apply.</p>
     </div>
 </footer>
 
@@ -546,7 +549,7 @@
                 steps: [
                     "'Hello Letter': A letter to the Principal about your skills and goals.",
                     "External Reference: One note from a coach/teacher confirming character.",
-                    "Provisional Review: Scholarship is reviewed in December."
+                    "Probationary Status Review: Scholarship is reviewed in December of the same academic year."
                 ], 
                 docs: ["Letter Template", "Reference Form"] 
             }
@@ -591,7 +594,7 @@
         let buttonsHTML = details.docs.map(d => `<button class="btn btn-outline" onclick="alert('Downloading ${d}')">📄 Download ${d}</button>`).join('');
         
         let provisionalAlert = status === 'new' ? 
-            `<div style="margin-bottom:20px; color:#c2410c; background:#ffedd5; padding:10px; border-radius:6px; font-size:0.9rem;">⚠️ <strong>Note:</strong> New student grants are provisional pending December review.</div>` : '';
+            `<div style="margin-bottom:20px; color:#c2410c; background:#ffedd5; padding:10px; border-radius:6px; font-size:0.9rem;">⚠️ <strong>Note:</strong> New student grants are probationary pending December review.</div>` : '';
 
         // Injecting the "Card" Layout
         container.innerHTML = `
