@@ -404,7 +404,7 @@
 
         <div id="assistanceAlert" class="assistance-alert">
             <h3>Tuition Assistance Recommended</h3>
-            <p>Based on your income (below $180k), you likely qualify for our Tuition Assistance Program.</p>
+            <p>Based on your income (below $160k), you likely qualify for our Tuition Assistance Program.</p>
             <a href="https://www.sva-school.org/assistance">Go to Tuition Assistance Page →</a>
         </div>
 
@@ -461,8 +461,8 @@
         const percentOutput = document.getElementById('percentOutput');
         const detailText = document.getElementById('calcDetailText');
 
-        // 1. Under 180k Check
-        if (income < 180000) {
+        // 1. Under 160k Check
+        if (income < 160000) {
             resultBox.style.display = 'none';
             alertBox.style.display = 'block';
             return;
@@ -473,12 +473,12 @@
         resultBox.classList.remove('rejected');
 
         // 2. Calculate FINANCIAL ELIGIBILITY (The Ceiling)
-        let basePercent = 30;
+        let basePercent = 25;
         if (income > 250000) {
              basePercent = 0;
         } else {
-             let drop = ((income - 180000) / 70000) * 25;
-             basePercent = 30 - drop;
+             let drop = ((income - 160000) / 70000) * 25;
+             basePercent = 25 - drop;
         }
 
         // Sibling Bonus
@@ -486,7 +486,7 @@
         let eligibleMax = basePercent + siblingBonus;
 
         // Caps
-        if (eligibleMax > 30) eligibleMax = 30; 
+        if (eligibleMax > 25) eligibleMax = 25; 
         if (eligibleMax < 5) eligibleMax = 5;
 
         // 3. Calculate MERIT IMPACT (The Actual Award)
