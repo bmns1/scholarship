@@ -594,7 +594,7 @@
         const details = info[status];
         
         let stepsHTML = details.steps.map(s => `<li>${s}</li>`).join('');
-        let buttonsHTML = details.docs.map(d => `<button class="btn btn-outline" onclick="alert('Downloading ${d}')">📄 Download ${d}</button>`).join('');
+        let buttonsHTML = details.docs.map(d => `<button class="btn btn-outline" onclick="alert('Check again soon: ${d}')">📄 Download ${d}</button>`).join('');
         
         let provisionalAlert = status === 'new' ? 
             `<div style="margin-bottom:20px; color:#c2410c; background:#ffedd5; padding:10px; border-radius:6px; font-size:0.9rem;">⚠️ <strong>Note:</strong> New student grants are probationary pending December review.</div>` : '';
