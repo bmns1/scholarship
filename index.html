@@ -496,17 +496,17 @@
             // REJECTION ZONE
             finalPercent = 0;
             resultBox.classList.add('rejected');
-            detailText.innerText = "Application Score too low. Application will likely be rejected.";
+            detailText.innerText = "Application Score too low. Application will likely be rejected.‡";
         } else if (merit >= 90) {
             // FULL AWARD ZONE
             finalPercent = eligibleMax;
-            detailText.innerText = `Excellent application! Full eligible amount awarded. Final award amount subject to budget availability.`;
+            detailText.innerText = `Excellent application! Full eligible for amount awarded. Final award amount subject to budget availability.‡`;
         } else {
             // SCALED ZONE (70-89)
             // Scale logic: 70 = 50% of award, 89 = ~90% of award
             let scaleFactor = 0.5 + ((merit - 70) / 20) * 0.5;
             finalPercent = eligibleMax * scaleFactor;
-            detailText.innerText = `Good application. Award scaled based on score. Final award amount subject to budget availability.`;
+            detailText.innerText = `Good application. Award scaled based on score. Final award amount subject to budget availability.‡`;
         }
 
         percentOutput.innerText = Math.round(finalPercent);
